@@ -41,8 +41,13 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+Plugin 'SearchComplete'
+Plugin 'EditPlus'
+
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
+
+" vim snippets
 Bundle "garbas/vim-snipmate"
 Bundle 'honza/vim-snippets'
 
@@ -93,7 +98,7 @@ set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 set noswapfile
-set mouse=a
+" set mouse=a
 set mousehide                   " Hide the mouse cursor while typing
 set backupdir=/tmp              " Back File
 
@@ -147,7 +152,7 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 "let g:solarized_contrast="normal"
 "let g:solarized_visibility="normal"
 let g:molokai_original=1
-
+let g:rehash256=1
 set background=dark
 
 color molokai             " Load a colorscheme
