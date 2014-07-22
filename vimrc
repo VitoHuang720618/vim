@@ -43,6 +43,7 @@ filetype plugin indent on    " required
 
 Plugin 'SearchComplete'
 Plugin 'EditPlus'
+Plugin 'taglist.vim'
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -59,6 +60,7 @@ Bundle 'bling/vim-bufferline'
 
 " PHP
 Bundle 'arnaud-lb/vim-php-namespace'
+Bundle 'shawncplus/phpcomplete.vim'
 
 " HTML
 Bundle 'amirh/HTML-AutoCloseTag'
@@ -75,6 +77,11 @@ Bundle 'Fakeclip'
 
 " BUFFER
 Bundle 'minibufexplorerpp'
+
+Bundle 'Shougo/vimproc'
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/vimshell'
+Bundle 'kanetann/oh-my-vimshell'
 
 " 多行注解
 Bundle 'tomtom/tcomment_vim'
@@ -177,6 +184,7 @@ map <S-L> gt
 " Buffer
 let g:miniBufExplMapCTabSwitchBufs = 1
 
+let g:neocomplcache_enable_at_startup = 1
 
 " 尊重作者
 " Remove trailing whitespace when writing a buffer, but not for diff files.
