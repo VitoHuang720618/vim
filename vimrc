@@ -44,6 +44,9 @@ filetype plugin indent on    " required
 Plugin 'SearchComplete'
 Plugin 'EditPlus'
 Plugin 'taglist.vim'
+Plugin 'FuzzyFinder'
+Bundle 'ctrlp.vim'
+
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -82,10 +85,17 @@ Bundle 'Shougo/vimproc'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/vimshell'
 Bundle 'kanetann/oh-my-vimshell'
+Bundle 'vimshell-ssh'
 
 " 多行注解
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tomasr/molokai'
+
+" 多行搜尋
+Bundle 'terryma/vim-multiple-cursors'
+
+Bundle 'pyflakes'
+Plugin 'Pydiction'
 syntax on
 set backspace=indent,eol,start  " Backspace for dummies
 set linespace=0                 " No extra spaces between rows
@@ -105,26 +115,9 @@ set foldenable                  " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 set noswapfile
-" set mouse=a
+" set mouse=a                   " use mouse
 set mousehide                   " Hide the mouse cursor while typing
 set backupdir=/tmp              " Back File
-
-let tabMaxWidth = 0
-
-" format
-if has('gui_running')
-    set guioptions-=T           " Remove the toolbar
-    set lines=60                " 40 lines of text instead of 24
-    "set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
-    set guifont=oxygen\ mono:h12
-
-else
-    if &term == 'xterm' || &term == 'screen'
-        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-    endif
-endif
-
-
 set nowrap                      " Do not wrap long lines
 set autoindent                  " Indent at the same level of the previous line
 set shiftwidth=4                " Use indents of 4 spaces
@@ -134,14 +127,27 @@ set softtabstop=4               " Let backspace delete indent
 set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
-
 setlocal nofoldenable
+let tabMaxWidth = 0
+
+" format
+if has('gui_running')
+    set guioptions-=T           " Remove the toolbar
+    set lines=60                " 40 lines of text instead of 24
+    set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+    "set guifont=oxygen\ mono:h12
+else
+    if &term == 'xterm' || &term == 'screen'
+        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    endif
+endif
+
 
 " NerdTree
 map <C-e> <plug>NERDTreeTabsToggle<CR>
 map <leader>e :NERDTreeFind<CR>
 nmap <leader>nt :NERDTreeFind<CR>
-let NERDTreeWinPos="left"
+let NERDTreeWinPos="right"
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -164,16 +170,28 @@ set background=dark
 
 color molokai             " Load a colorscheme
 
+" FuzzyFinder
+nnoremap <leader>ff :FufFile<CR>
+
+" ctrlp
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+            \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+let g:ctrlp_cache_dir = '/Volumes/RamDisk/'
 
 " PHP cs
 " let g:phpqa_codesniffer_cmd='/usr/local/Cellar/php53/5.3.28/bin/phpcs'
-let g:phpqa_php_cmd='/usr/local/Cellar/php53/5.3.28/bin/php'
-let g:phpqa_messdetector_cmd='/usr/local/Cellar/php53/5.3.28/bin/phpmd'
+let g:phpqa_php_cmd='/usr/local/Cellar/php55/5.5.15/bin/php'
+let g:phpqa_messdetector_cmd='/usr/local/Cellar/php55/5.5.15/bin/phpmd'
 let g:phpqa_codesniffer_autorun = 0
 
 let g:snipMate = {}
 let g:snipMate.scope_aliases = {}
 let g:snipMate.scope_aliases['php'] = 'php,html,company_guobi'
+let g:snipMate.scope_aliases['perl'] = 'perl,company_guobi'
+let g:snipMate.scope_aliases['python'] = 'python,company_guobi'
+
+
+" Python
 
 " Tabbar
 " go to prev tab
@@ -181,12 +199,22 @@ map <S-H> gT
 " go to next tab
 map <S-L> gt
 
+
+" 簡易調整視窗大小
+" 垂直
+nmap + <C-W>+
+nmap - <C-W>-
+
+" 水平
+nmap <Right>  <C-w>>
+nmap <Left>  <C-w><
+
+
 " Buffer
 let g:miniBufExplMapCTabSwitchBufs = 1
-
 let g:neocomplcache_enable_at_startup = 1
 
-" 尊重作者
+" 尊重作者,存檔移除多餘空白
 " Remove trailing whitespace when writing a buffer, but not for diff files.
 " From: Vigil <vim5632@rainslide.net>
 function RemoveTrailingWhitespace()
